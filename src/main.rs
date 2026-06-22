@@ -397,7 +397,7 @@ fn transpile_scm_to_a2ml(scm_content: &str, filename: &str) -> Result<String> {
     let mut output = String::new();
     
     // Add A2ML header
-    output.push_str("# SPDX-License-Identifier: PMPL-1.0-or-later\n");
+    output.push_str("# SPDX-License-Identifier: MPL-2.0\n");
     output.push_str(&format!("# Copyright (c) {} Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk>\n", year));
     output.push_str("#\n");
     output.push_str(&format!("# {} — Transpiled from .scm format\n", filename));
