@@ -1,0 +1,119 @@
+<!--
+SPDX-License-Identifier: CC-BY-SA-4.0
+SPDX-FileCopyrightText: 2025-2026 Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
+-->
+
+Estate-wide A2ML file normalizer - ensures correct structure across all
+repositories.
+
+# Purpose
+
+This tool normalizes A2ML file structure across an entire estate of git
+repositories:
+
+- Transpiles `.scm` files to `.a2ml` format
+
+- Ensures core A2ML files (STATE, META, ECOSYSTEM, AGENTIC, NEUROSYM,
+  PLAYBOOK) are in `.machine_readable/6a2/`
+
+- Ensures anchor files are in `.machine_readable/6a2/anchor/`
+
+- Allows multiple versions of anchor.a2ml with different dates
+
+- Creates README.adoc and AI manifest files for each directory
+
+- Cleans up old directories
+
+# Installation
+
+```bash
+cd a2ml/a2ml-estate-normalizer
+cargo build --release
+```
+
+# Usage
+
+## Full normalization (dry-run)
+
+```bash
+./target/release/a2ml-estate-normalizer --estate-root /path/to/repos
+```
+
+## Full normalization with execution
+
+```bash
+./target/release/a2ml-estate-normalizer --estate-root /path/to/repos --execute
+```
+
+## Only transpile .scm files
+
+```bash
+./target/release/a2ml-estate-normalizer --estate-root /path/to/repos --mode transpile --execute
+```
+
+## Only organize file locations
+
+```bash
+./target/release/a2ml-estate-normalizer --estate-root /path/to/repos --mode organize --execute
+```
+
+## Only create documents (README, manifest)
+
+```bash
+./target/release/a2ml-estate-normalizer --estate-root /path/to/repos --mode documents --execute
+```
+
+## Process specific repos
+
+```bash
+./target/release/a2ml-estate-normalizer --repos repo1,repo2,repo3 --execute
+```
+
+# Command Line Options
+
+| Option | Short | Description |
+|----|----|----|
+| --estate-root DIRECTORY | -e | Estate root directory (default: auto-detect) |
+| --execute | -x | Actually perform changes (default is dry-run) |
+| --verbose | -v | Verbose output |
+| --repos REPOS | -r | Only process specific repos (comma-separated) |
+| --mode MODE | -m | Mode: full, check, transpile, organize, documents (default: full) |
+
+# File Structure
+
+After normalization, each repository should have:
+
+    repo-root/
+    └── .machine_readable/
+        ├── 6a2/
+        │   ├── AGENTIC.a2ml
+        │   ├── ECOSYSTEM.a2ml
+        │   ├── META.a2ml
+        │   ├── NEUROSYM.a2ml
+        │   ├── PLAYBOOK.a2ml
+        │   ├── STATE.a2ml
+        │   ├── README.adoc
+        │   ├── 0-AI-MANIFEST.a2ml
+        │   └── anchor/
+        │       ├── ANCHOR.a2ml
+        │       ├── ANCHOR_YYYY_MM_DD.a2ml (additional dated versions)
+        │       ├── README.adoc
+        │       └── 0-AI-MANIFEST.a2ml
+        └── ...
+
+# Standards Compliance
+
+This tool enforces the structure defined in:
+
+- <https://github.com/hyperpolymath/standards/blob/main/A2ML-REPO-TEMPLATE.adoc>
+
+- <https://github.com/hyperpolymath/standards/tree/main/a2ml>
+
+# License
+
+Licensed under PMPL-1.0-or-later (Palimpsest Metaprogramming License).
+
+# Author
+
+Jonathan D.A. Jewell (hyperpolymath)
+\<[j.d.a.jewell@open.ac](j.d.a.jewell@open.ac).uk\>
